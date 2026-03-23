@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "designs",
+  "info": {
+    "singularName": "design",
+    "pluralName": "designs",
+    "displayName": "Design"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "heroImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "concept": {
+      "type": "text",
+      "required": true
+    },
+    "story": {
+      "type": "blocks"
+    },
+    "artisticInspiration": {
+      "type": "text"
+    },
+    "tags": {
+      "type": "json"
+    },
+    "relatedArtist": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::artist.artist"
+    },
+    "relatedNGO": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ngo.ngo"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "seoTitle": {
+      "type": "string"
+    },
+    "seoDescription": {
+      "type": "text"
+    },
+    "relatedDrop": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::drop.drop"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ngos",
+  "info": {
+    "singularName": "ngo",
+    "pluralName": "ngos",
+    "displayName": "NGO"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "shortDescription": {
+      "type": "text",
+      "required": true
+    },
+    "fullDescription": {
+      "type": "blocks",
+      "required": true
+    },
+    "mission": {
+      "type": "text",
+      "required": true
+    },
+    "focusArea": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "seoTitle": {
+      "type": "string"
+    },
+    "seoDescription": {
+      "type": "text"
+    },
+    "relatedDrops": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::drop.drop"
+    }
+  }
+}

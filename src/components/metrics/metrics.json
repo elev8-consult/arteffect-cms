@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_metrics_metrics",
+  "info": {
+    "displayName": "metrics"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "suffix": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

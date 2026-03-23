@@ -1,0 +1,68 @@
+{
+  "kind": "collectionType",
+  "collectionName": "impact_reports",
+  "info": {
+    "singularName": "impact-report",
+    "pluralName": "impact-reports",
+    "displayName": "Impact Report"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "summary": {
+      "type": "text"
+    },
+    "details": {
+      "type": "blocks"
+    },
+    "label": {
+      "type": "component",
+      "component": "metrics.metrics",
+      "repeatable": true
+    },
+    "relatedNGO": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ngo.ngo"
+    },
+    "relatedDrop": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::drop.drop"
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "reportDate": {
+      "type": "date"
+    },
+    "pdfAttachment": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "kind": "collectionType",
+  "collectionName": "drops",
+  "info": {
+    "singularName": "drop",
+    "pluralName": "drops",
+    "displayName": "Drop"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "theme": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "culturalNarrative": {
+      "type": "blocks"
+    },
+    "causeNarrative": {
+      "type": "blocks"
+    },
+    "releaseDate": {
+      "type": "date"
+    },
+    "season": {
+      "type": "string"
+    },
+    "limitedEdition": {
+      "type": "boolean",
+      "default": true
+    },
+    "artists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::artist.artist"
+    },
+    "ngos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ngo.ngo"
+    },
+    "designs": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::design.design"
+    },
+    "impactSummary": {
+      "type": "text"
+    },
+    "transparencyNote": {
+      "type": "text"
+    },
+    "seoTitle": {
+      "type": "string"
+    },
+    "seoDescription": {
+      "type": "text"
+    }
+  }
+}
