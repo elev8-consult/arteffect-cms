@@ -59,8 +59,9 @@
     },
     "relatedDrops": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::drop.drop"
+      "relation": "manyToMany",
+      "target": "api::drop.drop",
+      "mappedBy": "ngos"
     }
   }
 }

@@ -50,12 +50,13 @@
     },
     "relatedArtist": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::artist.artist"
+      "relation": "manyToOne",
+      "target": "api::artist.artist",
+      "inversedBy": "relatedDesigns"
     },
     "relatedNGO": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::ngo.ngo"
     },
     "featured": {
@@ -70,8 +71,9 @@
     },
     "relatedDrop": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::drop.drop"
+      "relation": "manyToOne",
+      "target": "api::drop.drop",
+      "inversedBy": "designs"
     }
   }
 }

@@ -463,7 +463,7 @@ export interface ApiArtistArtist extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::design.design'
     >;
-    relatedDrops: Schema.Attribute.Relation<'oneToOne', 'api::drop.drop'>;
+    relatedDrops: Schema.Attribute.Relation<'manyToMany', 'api::drop.drop'>;
     seoDescription: Schema.Attribute.Text;
     seoTitle: Schema.Attribute.String;
     shortBio: Schema.Attribute.Text & Schema.Attribute.Required;
@@ -536,9 +536,9 @@ export interface ApiDesignDesign extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    relatedArtist: Schema.Attribute.Relation<'oneToOne', 'api::artist.artist'>;
-    relatedDrop: Schema.Attribute.Relation<'oneToOne', 'api::drop.drop'>;
-    relatedNGO: Schema.Attribute.Relation<'oneToOne', 'api::ngo.ngo'>;
+    relatedArtist: Schema.Attribute.Relation<'manyToOne', 'api::artist.artist'>;
+    relatedDrop: Schema.Attribute.Relation<'manyToOne', 'api::drop.drop'>;
+    relatedNGO: Schema.Attribute.Relation<'manyToOne', 'api::ngo.ngo'>;
     seoDescription: Schema.Attribute.Text;
     seoTitle: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'title'>;
@@ -562,7 +562,7 @@ export interface ApiDropDrop extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    artists: Schema.Attribute.Relation<'oneToMany', 'api::artist.artist'>;
+    artists: Schema.Attribute.Relation<'manyToMany', 'api::artist.artist'>;
     causeNarrative: Schema.Attribute.Blocks;
     coverImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
@@ -570,19 +570,20 @@ export interface ApiDropDrop extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     culturalNarrative: Schema.Attribute.Blocks;
     description: Schema.Attribute.Text;
-    designs: Schema.Attribute.Relation<'oneToOne', 'api::design.design'>;
+    designs: Schema.Attribute.Relation<'oneToMany', 'api::design.design'>;
     impactSummary: Schema.Attribute.Text;
     limitedEdition: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::drop.drop'> &
       Schema.Attribute.Private;
-    ngos: Schema.Attribute.Relation<'oneToMany', 'api::ngo.ngo'>;
+    ngos: Schema.Attribute.Relation<'manyToMany', 'api::ngo.ngo'>;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     releaseDate: Schema.Attribute.Date;
     season: Schema.Attribute.String;
     seoDescription: Schema.Attribute.Text;
     seoTitle: Schema.Attribute.String;
-    slug: Schema.Attribute.UID<'title'>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     theme: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     transparencyNote: Schema.Attribute.Text;
@@ -656,7 +657,7 @@ export interface ApiNgoNgo extends Struct.CollectionTypeSchema {
     mission: Schema.Attribute.Text & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    relatedDrops: Schema.Attribute.Relation<'oneToOne', 'api::drop.drop'>;
+    relatedDrops: Schema.Attribute.Relation<'manyToMany', 'api::drop.drop'>;
     seoDescription: Schema.Attribute.Text;
     seoTitle: Schema.Attribute.String;
     shortDescription: Schema.Attribute.Text & Schema.Attribute.Required;
@@ -665,6 +666,55 @@ export interface ApiNgoNgo extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     website: Schema.Attribute.String;
+  };
+}
+
+export interface ApiProductProduct extends Struct.CollectionTypeSchema {
+  collectionName: 'products';
+  info: {
+    description: 'Showcase-only products linked to a Drop and a Design.';
+    displayName: 'Product';
+    pluralName: 'products';
+    singularName: 'product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    availabilityStatus: Schema.Attribute.Enumeration<
+      ['coming_soon', 'available', 'sold_out', 'archived']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'coming_soon'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    images: Schema.Attribute.Media<'images', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product.product'
+    > &
+      Schema.Attribute.Private;
+    material: Schema.Attribute.Text;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    productType: Schema.Attribute.Enumeration<
+      ['shirt', 'hoodie', 'cap', 'jacket', 'pants', 'accessory', 'other']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'shirt'>;
+    publishedAt: Schema.Attribute.DateTime;
+    relatedDesign: Schema.Attribute.Relation<'manyToOne', 'api::design.design'>;
+    relatedDrop: Schema.Attribute.Relation<'manyToOne', 'api::drop.drop'>;
+    showcaseOnly: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    sizingInfo: Schema.Attribute.Text;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1185,6 +1235,7 @@ declare module '@strapi/strapi' {
       'api::drop.drop': ApiDropDrop;
       'api::impact-report.impact-report': ApiImpactReportImpactReport;
       'api::ngo.ngo': ApiNgoNgo;
+      'api::product.product': ApiProductProduct;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

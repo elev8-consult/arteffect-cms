@@ -17,7 +17,8 @@
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true
     },
     "coverImage": {
       "type": "media",
@@ -51,18 +52,27 @@
     },
     "artists": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::artist.artist"
+      "relation": "manyToMany",
+      "target": "api::artist.artist",
+      "inversedBy": "relatedDrops"
     },
     "ngos": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::ngo.ngo"
+      "relation": "manyToMany",
+      "target": "api::ngo.ngo",
+      "inversedBy": "relatedDrops"
     },
     "designs": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::design.design"
+      "relation": "oneToMany",
+      "target": "api::design.design",
+      "mappedBy": "relatedDrop"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "relatedDrop"
     },
     "impactSummary": {
       "type": "text"

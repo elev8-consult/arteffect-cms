@@ -64,12 +64,14 @@
     "relatedDesigns": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::design.design"
+      "target": "api::design.design",
+      "mappedBy": "relatedArtist"
     },
     "relatedDrops": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::drop.drop"
+      "relation": "manyToMany",
+      "target": "api::drop.drop",
+      "mappedBy": "artists"
     }
   }
 }

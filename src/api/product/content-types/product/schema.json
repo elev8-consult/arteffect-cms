@@ -1,0 +1,68 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": "Showcase-only products linked to a Drop and a Design."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "productType": {
+      "type": "enumeration",
+      "enum": ["shirt", "hoodie", "cap", "jacket", "pants", "accessory", "other"],
+      "required": true,
+      "default": "shirt"
+    },
+    "description": {
+      "type": "text"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images"]
+    },
+    "material": {
+      "type": "text"
+    },
+    "sizingInfo": {
+      "type": "text"
+    },
+    "availabilityStatus": {
+      "type": "enumeration",
+      "enum": ["coming_soon", "available", "sold_out", "archived"],
+      "required": true,
+      "default": "coming_soon"
+    },
+    "showcaseOnly": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "relatedDrop": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::drop.drop",
+      "inversedBy": "products"
+    },
+    "relatedDesign": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::design.design"
+    }
+  }
+}
+
